@@ -1,0 +1,16 @@
+--- a/app.py	2026-10-11 16:51:20.681051795 +0000
++++ b/app.py	2026-10-11 16:51:20.739084373 +0000
+@@ -1333,6 +1333,13 @@
+     def ping():
+         return jsonify({'ok': True, 'ts': datetime.utcnow().isoformat()})
+ 
++    # Signal Society V2 — evolving citizens (dormant unless SOC_ENABLED=1)
++    try:
++        from society import init_society
++        init_society(app, scheduler)
++    except Exception as e:
++        log.error(f'Society V2 not loaded: {e}')
++
+     scheduler.start()
+     log.info(
+         f'Scheduler started — 12 agents + COUNCIL + ORACLE'
